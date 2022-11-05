@@ -84,7 +84,7 @@ export const postWebHook = (req: Request, res: Response) => {
     body.entry.forEach(function (entry: { messaging: any[] }) {
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0]
-      console.log(webhook_event)
+      //console.log(webhook_event)
 
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id
