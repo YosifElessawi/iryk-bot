@@ -10,7 +10,8 @@
     "dev": "nodemon src/server.ts",
     "clean": "rm -R build || true",
     "build": "npm run clean && npx tsc",
-    "start": "npm run build && node build/server.js"
+    "start": "npm run build && node build/server.js",
+    "deploy": "git add . && git commit -m Heroku && git push heroku main"
   },
   "keywords": [
     "bot"
