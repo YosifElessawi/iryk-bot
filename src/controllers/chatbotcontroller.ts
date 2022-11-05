@@ -2,6 +2,16 @@ import { Request, Response } from "express"
 import * as dotenv from "dotenv"
 dotenv.config()
 
+export const handleMessage: any = (
+  sender_psid: any,
+  received_message: any
+) => {}
+export const handlePostback: any = (
+  sender_psid: any,
+  received_message: any
+) => {}
+export const callSendAPI: any = (sender_psid: any, received_message: any) => {}
+
 export const getWebHook = (req: Request, res: Response) => {
   // Get my verfiy token
   let verify_token = process.env.MY_VERFIY_TOKEN
@@ -32,10 +42,19 @@ export const postWebHook = (req: Request, res: Response) => {
   // Send a 200 OK response if this is a page webhook
 
   if (body.object === "page") {
+    // Iterate over each entry - there may be multiple if batched
+    body.entry.forEach(function (entry: { messaging: any[] }) {
+      // Gets the body of the webhook event
+      let webhook_event = entry.messaging[0]
+      console.log(webhook_event)
+
+      // Get the sender PSID
+      let sender_psid = webhook_event.sender.id
+      console.log("Sender PSID: " + sender_psid)
+    })
+
     // Returns a '200 OK' response to all requests
     res.status(200).send("EVENT_RECEIVED")
-
-    // Determine which webhooks were triggered and get sender PSIDs and locale, message content and more.
   } else {
     // Return a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404)
