@@ -10,7 +10,8 @@
     "dev": "nodemon src/server.ts",
     "clean": "rm -R build || true",
     "build": "npm run clean && tsc",
-    "start": "npm run build && node build/server.js",
+    "start": "node build/server.js",
+    "postinstall": "npm run build",
     "deploy": "git add . && git commit -m Heroku && git push heroku main"
   },
   "keywords": [
