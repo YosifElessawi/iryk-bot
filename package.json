@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "clean": "rm -R build/",
+    "clean": "rm -R build || true",
     "build": "npm run clean && npx tsc",
     "start": "npm run build && node build/server.js"
   },
