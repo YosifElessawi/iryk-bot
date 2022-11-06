@@ -3,7 +3,7 @@ import request from "request"
 import * as dotenv from "dotenv"
 dotenv.config()
 
-export const handleMessage: any = (sender_psid: any, received_message: any) => {
+const handleMessage: any = (sender_psid: any, received_message: any) => {
   let response: { text: string } | undefined
 
   // Check if the message contains text
@@ -17,13 +17,9 @@ export const handleMessage: any = (sender_psid: any, received_message: any) => {
   // Sends the response message
   callSendAPI(sender_psid, response)
 }
+const handlePostback: any = (sender_psid: any, received_message: any) => {}
 
-export const handlePostback: any = (
-  sender_psid: any,
-  received_message: any
-) => {}
-
-export const callSendAPI: any = (sender_psid: any, response: any) => {
+const callSendAPI: any = (sender_psid: any, response: any) => {
   // Construct the message body
   let request_body = {
     recipient: {
@@ -76,9 +72,9 @@ export const postWebHook = (req: Request, res: Response) => {
   let body = req.body
 
   console.log(`\u{1F7EA} Received webhook:`)
-  console.dir(body, { depth: null })
-  // Send a 200 OK response if this is a page webhook
+  //console.dir(body, { depth: null })
 
+  // Send a 200 OK response if this is a page webhook
   if (body.object === "page") {
     // Iterate over each entry - there may be multiple if batched
     body.entry.forEach(function (entry: { messaging: any[] }) {
@@ -105,4 +101,6 @@ export const postWebHook = (req: Request, res: Response) => {
     res.sendStatus(404)
   }
 }
-//curl -X GET "localhost:3000/webhook?hub.verify_token=iryktoken&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
+//curl -X GET "https://iryk.herokuapp.com/webhook?hub.verify_token=iryktoken&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
+//curl -H "Content-Type: application/json" -X POST "https://iryk.herokuapp.com/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "hi there!!"}]}]}'
+//heroku logs --app iryk
